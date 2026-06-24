@@ -2,7 +2,7 @@ package com.wcpredictor.match;
 
 public class MatchDetails {
 
-    private int number;
+    private int matchNumber;
     private String dateString;
     private String homeKey;
     private String homeName;
@@ -10,7 +10,7 @@ public class MatchDetails {
     private String awayName;
 
     public MatchDetails(int number, String dateString, String home) {
-        this.number = number;
+        this.matchNumber = number;
         this.dateString = dateString;
         this.homeKey = home;
     }
@@ -20,24 +20,24 @@ public class MatchDetails {
         this.awayKey = away;
     }    
 
-    public int getNumber() {
-        return number;
+    public int getmatchNumber() {
+        return this.matchNumber;
     }
 
     public String getHomeName() {
-        return homeName;
+        return this.homeName;
     }
 
     public String getAwayName() {
-        return awayName;
+        return this.awayName;
     }
 
     public String getHomeKey() {
-        return homeKey;
+        return this.homeKey;
     }
 
     public String getAwayKey() {
-        return awayKey;
+        return this.awayKey;
     }
 
     public void setAwayKey(String away) {
@@ -54,7 +54,7 @@ public class MatchDetails {
 
     public void display() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Match " + this.number + ": ");
+        sb.append("Match " + this.matchNumber + ": ");
         sb.append(this.homeName);
         sb.append("(" + this.homeKey + ")");
         sb.append(" v ");

@@ -1,5 +1,6 @@
 package com.wcpredictor.app;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,10 +26,13 @@ public class Application {
     private List<MatchDetails> r16Matches;
     private List<MatchDetails> qfMatches;
     private List<MatchDetails> sfMatches;
-    // private List<MatchDetails> theFinal;
+    private List<MatchDetails> theFinal;
+
+    private List<String> predictions;
 
     public Application(final StateMachine stateMachine) {
         this.stateMachine = stateMachine;
+        this.predictions = new ArrayList<>();
     }
 
     public void predict() {
@@ -40,13 +44,13 @@ public class Application {
 
             switch (stateMachine.getCurrentState()) {
                 case R32:
-                    System.out.println("Round of 32 Fixtures");
-
+                    
                     GroupStage standings = GroupStandingsLoader.loadStandings();
                     Map<String, String> r32Teams = standings.getQualifiedTeamsByGroup();
                     Map<String, String> fixtureSet = AnnexCFixtureLookup.getR32FixtureSet(standings.getAnnexCKey());
 
                     schedule = new R32Schedule(r32Teams, fixtureSet);
+                    System.out.println("\nR32 Fixtures:\n");
                     r32Matches = schedule.getSchedule();
                     schedule.printSchedule();
 
@@ -54,8 +58,10 @@ public class Application {
                     break;
 
                 case R16:
+                    predictions.add("R32 Predictions");
+
                     schedule = new R16Schedule(this.getWinnersForMatchups(sc, r32Matches));
-                    System.out.println("\nRound of 16 Fixtures:\n");
+                    System.out.println("\nR16 Fixtures:\n");
                     r16Matches = schedule.getSchedule();
                     schedule.printSchedule();
 
@@ -63,6 +69,8 @@ public class Application {
                     break;
                 
                 case QF:
+                    predictions.add("R16 Predictions");                  
+
                     schedule = new QFSchedule(this.getWinnersForMatchups(sc, r16Matches));
                     System.out.println("\nQuarter-Final Fixtures:\n");
                     qfMatches = schedule.getSchedule();
@@ -72,6 +80,8 @@ public class Application {
                     break;
 
                 case SF:
+                    predictions.add("QF Predictions");
+
                     schedule = new SFSchedule(this.getWinnersForMatchups(sc, qfMatches));
                     System.out.println("\nSemi-Final Fixtures:\n");
                     sfMatches = schedule.getSchedule();
@@ -81,40 +91,73 @@ public class Application {
                     break;
 
                 case F:
+                    predictions.add("SF Predictions");
+
                     schedule = new FinalSchedule(this.getWinnersForMatchups(sc, sfMatches));
                     System.out.println("\nThe Final Fixtures:\n");
-                    // theFinal = schedule.getSchedule();
+                    theFinal = schedule.getSchedule();
                     schedule.printSchedule();
+
+                    predictions.add("Final Prediction");
+                    Map<String, String> winnerMap = this.getWinnersForMatchups(sc, theFinal);
+                    String winner = winnerMap.entrySet().iterator().next().getValue();
+                    System.out.println("The winner of World Cup 2026 will be " + winner.toUpperCase());
 
                     this.stateMachine.next();
                     break;
 
                 default:
+                    System.out.println("how did we get here!");
                     break;
             }
 
         }
         sc.close();
+        System.out.println();
+        this.displayPredictions();
     }
 
-    private Map<String, String> getWinnersForMatchups(final Scanner sc, final List<MatchDetails> matches) {
+    private Map<String, String> getWinnersForMatchups(final Scanner sc, final List<MatchDetails> matches) 
+    {
         Map<String, String> codeToTeamMap = new HashMap<>();
-        for (MatchDetails matchDetails : matches) {
+        
+        for (MatchDetails matchDetails : matches) 
+        {
             matchDetails.display();
 
             System.out.print("Who wins this game? (H or A): ");
             String input = sc.nextLine();
 
-            String matchKey = "W" + matchDetails.getNumber();
+            String matchKey = "W" + matchDetails.getmatchNumber();
+            
+            String winner = "";
+            String knockedOut = "";
 
-            if (input.equalsIgnoreCase("h")) {
-                codeToTeamMap.put(matchKey, matchDetails.getHomeName());
-            } else if (input.equalsIgnoreCase("a")) {
-                codeToTeamMap.put(matchKey, matchDetails.getAwayName());
+            if (input.equalsIgnoreCase("h")) 
+            {
+                winner = matchDetails.getHomeName();
+                knockedOut = matchDetails.getAwayName();
+            } 
+            else if (input.equalsIgnoreCase("a")) 
+            {
+                winner = matchDetails.getAwayName();
+                knockedOut = matchDetails.getHomeName();
             }
+
+            codeToTeamMap.put(matchKey, winner);
+            predictions.add(winner.toUpperCase() + " win vs " + knockedOut);
         }
+        predictions.add("");
 
         return codeToTeamMap;
+    }
+
+    private void displayPredictions()
+    {
+        for(String line: predictions) 
+        {
+            System.out.println(line);
+        }
     }
 
 }
