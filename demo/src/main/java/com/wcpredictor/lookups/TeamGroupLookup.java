@@ -1,67 +1,89 @@
 package com.wcpredictor.lookups;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import com.wcpredictor.enums.GroupEnum;
 
 public class TeamGroupLookup {
 
-    private static Map<String, GroupEnum> lookup = new HashMap<>();
-    static 
+    private static final Map<String, GroupEnum> lookup = Map.ofEntries(
+        // Group A
+        Map.entry("Mexico", GroupEnum.A),
+        Map.entry("Korea Republic", GroupEnum.A),
+        Map.entry("Czechia", GroupEnum.A),
+        Map.entry("South Africa", GroupEnum.A),
+        // Group B
+        Map.entry("Canada", GroupEnum.B),
+        Map.entry("Switzerland", GroupEnum.B),
+        Map.entry("Bosnia and Herzegovina", GroupEnum.B),
+        Map.entry("Qatar", GroupEnum.B),
+        // Group C
+        Map.entry("Brazil", GroupEnum.C),
+        Map.entry("Morocco", GroupEnum.C),
+        Map.entry("Scotland", GroupEnum.C),
+        Map.entry("Haiti", GroupEnum.C),
+        // Group D
+        Map.entry("USA", GroupEnum.D),
+        Map.entry("Australia", GroupEnum.D),
+        Map.entry("Paraguay", GroupEnum.D),
+        Map.entry("Turkey", GroupEnum.D),
+        // Group E
+        Map.entry("Germany", GroupEnum.E),
+        Map.entry("Ivory Coast", GroupEnum.E),
+        Map.entry("Ecuador", GroupEnum.E),
+        Map.entry("Curacao", GroupEnum.E),
+        // Group F
+        Map.entry("Netherlands", GroupEnum.F),
+        Map.entry("Japan", GroupEnum.F),
+        Map.entry("Sweden", GroupEnum.F),
+        Map.entry("Tunisia", GroupEnum.F),
+        // Group G
+        Map.entry("Egypt", GroupEnum.G),
+        Map.entry("IR Iran", GroupEnum.G),
+        Map.entry("Belgium", GroupEnum.G),
+        Map.entry("New Zealand", GroupEnum.G),
+        // Group H
+        Map.entry("Spain", GroupEnum.H),
+        Map.entry("Uruguay", GroupEnum.H),
+        Map.entry("Cape Verde", GroupEnum.H),
+        Map.entry("Saudi Arabia", GroupEnum.H),
+        // Group I
+        Map.entry("France", GroupEnum.I),
+        Map.entry("Norway", GroupEnum.I),
+        Map.entry("Senegal", GroupEnum.I),
+        Map.entry("Iraq", GroupEnum.I),
+        // Group J
+        Map.entry("Argentina", GroupEnum.J),
+        Map.entry("Austria", GroupEnum.J),
+        Map.entry("Algeria", GroupEnum.J),
+        Map.entry("Jordan", GroupEnum.J),
+        // Group K
+        Map.entry("Colombia", GroupEnum.K),
+        Map.entry("DR Congo", GroupEnum.K),
+        Map.entry("Portugal", GroupEnum.K),
+        Map.entry("Uzbekistan", GroupEnum.K),
+        // Group L
+        Map.entry("England", GroupEnum.L),
+        Map.entry("Ghana", GroupEnum.L),
+        Map.entry("Panama", GroupEnum.L),
+        Map.entry("Croatia", GroupEnum.L)
+    );
+
+    public static GroupEnum getGroupByTeam(String team) 
     {
-        lookup.put("Mexico", GroupEnum.A);
-        lookup.put("Korea Republic", GroupEnum.A);
-        lookup.put("Czechia", GroupEnum.A);
-        lookup.put("South Africa", GroupEnum.A);
-        lookup.put("Canada", GroupEnum.B);
-        lookup.put("Switzerland", GroupEnum.B);
-        lookup.put("Bosnia and Herzegovina", GroupEnum.B);
-        lookup.put("Qatar", GroupEnum.B);
-        lookup.put("Brazil", GroupEnum.C);
-        lookup.put("Morocco", GroupEnum.C);
-        lookup.put("Scotland", GroupEnum.C);
-        lookup.put("Haiti", GroupEnum.C);
-        lookup.put("USA", GroupEnum.D);
-        lookup.put("Australia", GroupEnum.D);
-        lookup.put("Paraguay", GroupEnum.D);
-        lookup.put("Turkey", GroupEnum.D);
-        lookup.put("Germany", GroupEnum.E);
-        lookup.put("Ivory Coast", GroupEnum.E);
-        lookup.put("Ecuador", GroupEnum.E);
-        lookup.put("Curacao", GroupEnum.E);
-        lookup.put("Netherlands", GroupEnum.F);
-        lookup.put("Japan", GroupEnum.F);
-        lookup.put("Sweden", GroupEnum.F);
-        lookup.put("Tunisia", GroupEnum.F);
-        lookup.put("Egypt", GroupEnum.G);
-        lookup.put("IR Iran", GroupEnum.G);
-        lookup.put("Belgium", GroupEnum.G);
-        lookup.put("New Zealand", GroupEnum.G);
-        lookup.put("Spain", GroupEnum.H);
-        lookup.put("Uruguay", GroupEnum.H);
-        lookup.put("Cape Verde", GroupEnum.H);
-        lookup.put("Saudi Arabia", GroupEnum.H);
-        lookup.put("France", GroupEnum.I);
-        lookup.put("Norway", GroupEnum.I);
-        lookup.put("Senegal", GroupEnum.I);
-        lookup.put("Iraq", GroupEnum.I);
-        lookup.put("Argentina", GroupEnum.J);
-        lookup.put("Austria", GroupEnum.J);
-        lookup.put("Algeria", GroupEnum.J);
-        lookup.put("Jordan", GroupEnum.J);
-        lookup.put("Colombia", GroupEnum.K);
-        lookup.put("DR Congo", GroupEnum.K);
-        lookup.put("Portugal", GroupEnum.K);
-        lookup.put("Uzbekistan", GroupEnum.K);
-        lookup.put("England", GroupEnum.L);
-        lookup.put("Ghana", GroupEnum.L);
-        lookup.put("Panama", GroupEnum.L);
-        lookup.put("Croatia", GroupEnum.L);
+        return lookup.get(team);
     }
 
-    public static GroupEnum getGroupByTeam(String team) {
-        return lookup.get(team);
+    public static String validTeamList() 
+    {
+        StringBuilder sb = new StringBuilder();
+        for (String entry : lookup.keySet()) 
+        {
+            sb.append(entry + ",");
+        }
+        sb.delete(sb.length() - 1, sb.length());
+
+        return sb.toString();
     }
 
 }

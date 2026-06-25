@@ -1,15 +1,19 @@
 package com.wcpredictor.app;
 
-public class StateMachine {
+public class StateMachine 
+{
 
-    public enum StateEnum {
+    public enum StateEnum 
+    {
         R32, R16, QF, SF, F, DONE
     }
 
     private StateEnum currentState = StateEnum.R32;
 
-    public void next() {
-        switch (currentState) {
+    public void next() 
+    {
+        switch (currentState) 
+        {
             case R32:
                 this.currentState = StateEnum.R16;
                 break;
@@ -30,7 +34,8 @@ public class StateMachine {
         }
     }
 
-    public StateEnum getCurrentState() {
+    public StateEnum getCurrentState() 
+    {
         return currentState;
     }
 

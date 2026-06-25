@@ -4,11 +4,12 @@ import java.util.Map;
 
 import com.wcpredictor.match.MatchDetails;
 
-public class QFSchedule extends AbstractSchedule {
+public class QFSchedule extends AbstractSchedule 
+{
 
-    public QFSchedule(final Map<String, String> m)
+    public QFSchedule(final Map<String, String> keyMap)
     {
-        super(m);
+        super(keyMap);
         
         //Add 1/4 final matches
         schedule.add(new MatchDetails(97, "Thu 9 July", "W89", "W90"));
@@ -17,5 +18,4 @@ public class QFSchedule extends AbstractSchedule {
         schedule.add(new MatchDetails(100, "Sat 11 Jul", "W95", "W96"));
     }
 
-    
 }

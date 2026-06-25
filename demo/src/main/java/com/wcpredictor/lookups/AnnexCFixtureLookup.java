@@ -6,7 +6,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AnnexCFixtureLookup {
+public class AnnexCFixtureLookup 
+{
 
     public static final String[] groupWinners = new String[]{"1A", "1B", "1D", "1E", "1G", "1I", "1K", "1L"};
 
@@ -19,7 +20,7 @@ public class AnnexCFixtureLookup {
         {  
             String line;
             while ((line = reader.readLine()) != null) 
-                {
+            {
 
                 String[] arr = line.split(",");
 

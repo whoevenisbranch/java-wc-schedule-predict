@@ -1,7 +1,7 @@
 package com.wcpredictor.match;
 
-public class MatchDetails {
-
+public class MatchDetails 
+{
     private int matchNumber;
     private String dateString;
     private String homeKey;
@@ -9,34 +9,41 @@ public class MatchDetails {
     private String awayKey;
     private String awayName;
 
-    public MatchDetails(int number, String dateString, String home) {
+    public MatchDetails(int number, String dateString, String home) 
+    {
         this.matchNumber = number;
         this.dateString = dateString;
         this.homeKey = home;
     }
 
-    public MatchDetails(int number, String dateString, String home, String away) {
+    public MatchDetails(int number, String dateString, String home, String away) 
+    {
         this(number, dateString, home);
         this.awayKey = away;
     }    
 
-    public int getmatchNumber() {
+    public int getmatchNumber() 
+    {
         return this.matchNumber;
     }
 
-    public String getHomeName() {
+    public String getHomeName() 
+    {
         return this.homeName;
     }
 
-    public String getAwayName() {
+    public String getAwayName()
+    {
         return this.awayName;
     }
 
-    public String getHomeKey() {
+    public String getHomeKey() 
+    {
         return this.homeKey;
     }
 
-    public String getAwayKey() {
+    public String getAwayKey() 
+    {
         return this.awayKey;
     }
 
@@ -44,15 +51,18 @@ public class MatchDetails {
         this.awayKey = away;
     }
 
-    public void setHomeName(String homeName) {
+    public void setHomeName(String homeName) 
+    {
         this.homeName = homeName;
     }
 
-    public void setAwayName(String awayName) {
+    public void setAwayName(String awayName) 
+    {
         this.awayName = awayName;
     }
 
-    public void display() {
+    public void display() 
+    {
         StringBuilder sb = new StringBuilder();
         sb.append("Match " + this.matchNumber + ": ");
         sb.append(this.homeName);

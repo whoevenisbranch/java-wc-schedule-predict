@@ -2,7 +2,6 @@ package com.wcpredictor.enums;
 
 public enum HomeSlotEnum 
 {
-
     A2("2A"),
     E1("1E"),
     F1("1F"),

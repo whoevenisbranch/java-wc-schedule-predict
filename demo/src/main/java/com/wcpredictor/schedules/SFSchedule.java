@@ -7,9 +7,9 @@ import com.wcpredictor.match.MatchDetails;
 public class SFSchedule extends AbstractSchedule 
 {
 
-    public SFSchedule(final Map<String, String> m)
+    public SFSchedule(final Map<String, String> keyMap)
     {
-        super(m);
+        super(keyMap);
         schedule.add(new MatchDetails(101, "Tue 14 July", "W97", "W98"));
         schedule.add(new MatchDetails(102, "Wed 15 Jul", "W99", "W100"));
     }

@@ -7,7 +7,16 @@ public class Main {
 
     public static void main(String[] args) {
         Application app = new Application(new StateMachine());
-        app.predict();
+
+        try 
+        {
+            app.predict();
+        } 
+        catch (Exception e) 
+        {
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
     }
 
 }

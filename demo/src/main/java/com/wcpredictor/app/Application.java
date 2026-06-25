@@ -18,7 +18,8 @@ import com.wcpredictor.schedules.R16Schedule;
 import com.wcpredictor.schedules.R32Schedule;
 import com.wcpredictor.schedules.SFSchedule;
 
-public class Application {
+public class Application 
+{
 
     private final StateMachine stateMachine;
 
@@ -30,22 +31,26 @@ public class Application {
 
     private List<String> predictions;
 
-    public Application(final StateMachine stateMachine) {
+    public Application(final StateMachine stateMachine) 
+    {
         this.stateMachine = stateMachine;
         this.predictions = new ArrayList<>();
     }
 
-    public void predict() {
+    public void predict() throws Exception 
+    {
         Scanner sc = new Scanner(System.in);
         
-        while (stateMachine.getCurrentState() != StateEnum.DONE) {
+        while (stateMachine.getCurrentState() != StateEnum.DONE) 
+            {
 
             AbstractSchedule schedule = null;
 
-            switch (stateMachine.getCurrentState()) {
+            switch (stateMachine.getCurrentState()) 
+            {
                 case R32:
                     
-                    GroupStage standings = GroupStandingsLoader.loadStandings();
+                    GroupStage standings = GroupStandingsLoader.loadStandings();                    
                     Map<String, String> r32Teams = standings.getQualifiedTeamsByGroup();
                     Map<String, String> fixtureSet = AnnexCFixtureLookup.getR32FixtureSet(standings.getAnnexCKey());
 
@@ -107,13 +112,11 @@ public class Application {
                     break;
 
                 default:
-                    System.out.println("how did we get here!");
-                    break;
+                    throw new Exception("state machine fell into unrecoverable state: " + stateMachine.getCurrentState());
             }
 
         }
         sc.close();
-        System.out.println();
         this.displayPredictions();
     }
 
@@ -123,29 +126,46 @@ public class Application {
         
         for (MatchDetails matchDetails : matches) 
         {
-            matchDetails.display();
-
-            System.out.print("Who wins this game? (H or A): ");
-            String input = sc.nextLine();
-
-            String matchKey = "W" + matchDetails.getmatchNumber();
-            
-            String winner = "";
-            String knockedOut = "";
-
-            if (input.equalsIgnoreCase("h")) 
+            boolean valid = false;
+            while (!valid) 
             {
-                winner = matchDetails.getHomeName();
-                knockedOut = matchDetails.getAwayName();
-            } 
-            else if (input.equalsIgnoreCase("a")) 
-            {
-                winner = matchDetails.getAwayName();
-                knockedOut = matchDetails.getHomeName();
+
+                matchDetails.display();
+
+                System.out.print("Who wins this game? (H or A): ");
+                String input = sc.nextLine();
+
+                String matchKey = "W" + matchDetails.getmatchNumber();
+                
+                String winner = "";
+                String knockedOut = "";
+
+                if (input.equalsIgnoreCase("h")) 
+                {
+                    winner = matchDetails.getHomeName();
+                    knockedOut = matchDetails.getAwayName();
+                    valid = true;
+                } 
+                else if (input.equalsIgnoreCase("a")) 
+                {
+                    winner = matchDetails.getAwayName();
+                    knockedOut = matchDetails.getHomeName();
+                    valid = true;
+                }
+                else if (input.equalsIgnoreCase("exit")) 
+                {
+                    System.out.println("recieved exit...exiting program.");
+                    System.exit(1);
+                }
+                else 
+                {
+                    System.out.println("Invalid input. Enter H/A/exit only.");
+                }
+
+                codeToTeamMap.put(matchKey, winner);
+                predictions.add(winner.toUpperCase() + " win vs " + knockedOut);
             }
-
-            codeToTeamMap.put(matchKey, winner);
-            predictions.add(winner.toUpperCase() + " win vs " + knockedOut);
+            
         }
         predictions.add("");
 
@@ -154,6 +174,7 @@ public class Application {
 
     private void displayPredictions()
     {
+        System.out.println();
         for(String line: predictions) 
         {
             System.out.println(line);

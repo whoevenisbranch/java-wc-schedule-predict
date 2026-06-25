@@ -11,9 +11,9 @@ public abstract class AbstractSchedule
     protected List<MatchDetails> schedule = new ArrayList<>();
     protected final Map<String, String> keyToTeamMap; 
 
-    public AbstractSchedule(final Map<String, String> m)
+    public AbstractSchedule(final Map<String, String> keyMap)
     {
-        this.keyToTeamMap = m;
+        this.keyToTeamMap = keyMap;
     }
 
     public List<MatchDetails> getSchedule()

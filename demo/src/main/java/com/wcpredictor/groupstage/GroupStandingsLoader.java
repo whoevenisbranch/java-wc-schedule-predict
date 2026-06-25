@@ -2,6 +2,7 @@ package com.wcpredictor.groupstage;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,9 +12,10 @@ import java.util.Map;
 import com.wcpredictor.enums.GroupEnum;
 import com.wcpredictor.lookups.TeamGroupLookup;
 
-public class GroupStandingsLoader {
+public class GroupStandingsLoader 
+{
 
-    public static GroupStage loadStandings() 
+    public static GroupStage loadStandings() throws IOException
     {
         Map<String, String> teamsByGroupStanding = new HashMap<>();
         List<String> bestThirdTeamGroups = new ArrayList<>();
@@ -28,6 +30,13 @@ public class GroupStandingsLoader {
                 for (String team : split) 
                 {
                     GroupEnum group = TeamGroupLookup.getGroupByTeam(team);
+
+                    if (group == null)
+                    {
+                        String validTeams = TeamGroupLookup.validTeamList();
+                        throw new IOException("Invalid team in configuration: " + team + "\nValid Teams: " + validTeams);
+                    }
+
                     String key = i + group.getValue();
                     teamsByGroupStanding.put(key, team);
 
@@ -39,21 +48,15 @@ public class GroupStandingsLoader {
                 
             }
 
-            reader.close();
-
             Collections.sort(bestThirdTeamGroups);
             String key = "";
-            for (String group :bestThirdTeamGroups) {
+            for (String group :bestThirdTeamGroups) 
+            {
                 key += group;
             }
 
             return new GroupStage(key, teamsByGroupStanding);
             
-        } 
-        catch (Exception e) 
-        {
-            System.err.println(e.getMessage());
-            return null;
         }
     }
 
