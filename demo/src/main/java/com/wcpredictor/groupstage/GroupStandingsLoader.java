@@ -1,8 +1,9 @@
 package com.wcpredictor.groupstage;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,7 +21,7 @@ public class GroupStandingsLoader
         Map<String, String> teamsByGroupStanding = new HashMap<>();
         List<String> bestThirdTeamGroups = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("./group/standings.csv")))
+        try (BufferedReader reader = new BufferedReader(Files.newBufferedReader(Path.of(".standings.csv"))))
         {  
             for (int i = 1; i <= 3; i++) 
             {
@@ -49,13 +50,13 @@ public class GroupStandingsLoader
             }
 
             Collections.sort(bestThirdTeamGroups);
-            String key = "";
+            StringBuilder key = new StringBuilder();
             for (String group :bestThirdTeamGroups) 
             {
-                key += group;
+                key.append(group);
             }
 
-            return new GroupStage(key, teamsByGroupStanding);
+            return new GroupStage(key.toString(), teamsByGroupStanding);
             
         }
     }

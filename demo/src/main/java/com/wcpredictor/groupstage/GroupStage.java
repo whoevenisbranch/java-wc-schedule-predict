@@ -5,8 +5,8 @@ import java.util.Map;
 public class GroupStage 
 {
     
-    private String annexCKey;
-    private Map<String, String> qualifiedTeamsByGroup;
+    private final String annexCKey;
+    private final Map<String, String> qualifiedTeamsByGroup;
 
     public GroupStage(String annexCKey, Map<String, String> qualifiedTeamsByGroup) 
     {
@@ -24,13 +24,4 @@ public class GroupStage
         return qualifiedTeamsByGroup;
     }
 
-    public void setAnnexCKey(String annexCKey) 
-    {
-        this.annexCKey = annexCKey;
-    }
-
-    public void setQualifiedTeamsByGroup(Map<String, String> qualifiedTeamsByGroup) 
-    {
-        this.qualifiedTeamsByGroup = qualifiedTeamsByGroup;
-    }
 }

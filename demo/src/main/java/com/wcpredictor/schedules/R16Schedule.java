@@ -7,9 +7,9 @@ import com.wcpredictor.match.MatchDetails;
 public class R16Schedule extends AbstractSchedule 
 {
 
-    public R16Schedule(final Map<String, String> keyMap)
+    public R16Schedule(final Map<String, String> scheduleKeyToTeamNameMap)
     {
-        super(keyMap);
+        super(scheduleKeyToTeamNameMap);
         schedule.add(new MatchDetails(89, "Sat 4 Jul", "W74", "W77"));
         schedule.add(new MatchDetails(90, "Sat 4 Jul", "W73", "W75"));
         schedule.add(new MatchDetails(91, "Sun 5 Jul", "W76", "W78"));

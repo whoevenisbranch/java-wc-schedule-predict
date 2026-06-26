@@ -1,63 +1,68 @@
 package com.wcpredictor.lookups;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class AnnexCFixtureLookup 
 {
 
-    public static final String[] groupWinners = new String[]{"1A", "1B", "1D", "1E", "1G", "1I", "1K", "1L"};
+    private static final List<String> GROUP_WINNERS = List.of("1A", "1B", "1D", "1E", "1G", "1I", "1K", "1L");
+    private static final String THIRD_PLACE_PREFIX = "3";
 
-    public static Map<String, String> getR32FixtureSet(String key) 
+    private AnnexCFixtureLookup()
     {
+        //Intentionally left blank.
+    }
 
-        Map<String, String> fixtures = null;
+    public static Map<String, String> getR32FixtureSet(String key) throws IOException {
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("./annex.csv")))
+        try (BufferedReader reader = new BufferedReader(Files.newBufferedReader(Path.of("./annex.csv"))))
         {  
             String line;
-            while ((line = reader.readLine()) != null) 
+            while ((line = reader.readLine()) != null)
             {
 
                 String[] arr = line.split(",");
 
-                String rowKey = extractKey(Arrays.copyOf(arr, arr.length));
+                String rowKey = createSortedFixtureSetKey(arr);
                 if (rowKey.equals(key)) 
                 {
-                    fixtures = extractFixtures(key, arr);
-                    break;
+                    return extractFixtures(arr);
                 }
                 
             }
 
-            reader.close();
-            return fixtures;
-        } 
-        catch (Exception e) 
-        {
-            System.err.println(e.getMessage());
-            return fixtures;
+            throw new NoSuchElementException("No fixture set found for key: " + key);
+
         }
+
     }
 
-    public static String extractKey(String[] arr) 
+    public static String createSortedFixtureSetKey(String[] arr)
     {
-        Arrays.sort(arr);
-        return String.join("", arr);
+        return Arrays.stream(arr).sorted().collect(Collectors.joining());
     }
 
-    public static Map<String, String> extractFixtures(String key, String[] arr) 
+    public static Map<String, String> extractFixtures(String[] arr)
     {
-        Map<String, String> fixtures = new HashMap<>();
-        
+        if (arr.length != GROUP_WINNERS.size())
+        {
+            throw new IllegalArgumentException(
+                    String.format("Expected %d best 3rd place teams. Got: %d", GROUP_WINNERS.size(), arr.length)
+            );
+        }
+
+        Map<String, String> fixtures = new HashMap<>(GROUP_WINNERS.size());
+
         for (int i = 0; i < arr.length; i++) 
         {
 
-            String home = groupWinners[i];
-            String away = "3" + arr[i];
+            String home = GROUP_WINNERS.get(i);
+            String away = THIRD_PLACE_PREFIX + arr[i];
 
             fixtures.put(home, away);
         }

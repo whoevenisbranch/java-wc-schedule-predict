@@ -1,6 +1,6 @@
 package com.wcpredictor.enums;
 
-public enum AwaySlotEnum 
+public enum NonAnnexAwaySlotEnum
 {
     //non annex c
     B2("2B"),
@@ -10,24 +10,11 @@ public enum AwaySlotEnum
     L2("2L"),
     J2("2J"),
     H2("2H"),
-    G2("2G"),
-    //third place
-    A3("3A"),
-    B3("3B"),
-    C3("3C"),
-    D3("3D"),
-    E3("3E"),
-    F3("3F"),
-    G3("3G"),
-    H3("3H"),
-    I3("3I"),
-    J3("3J"),
-    K3("3K"),
-    L3("3L");
+    G2("2G");
 
     private final String value;
 
-    private AwaySlotEnum(String value) 
+    NonAnnexAwaySlotEnum(String value)
     {
         this.value = value;
     }

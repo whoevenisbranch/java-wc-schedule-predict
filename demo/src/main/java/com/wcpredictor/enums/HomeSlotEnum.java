@@ -21,7 +21,7 @@ public enum HomeSlotEnum
 
     private final String value;
 
-    private HomeSlotEnum(String value) 
+    HomeSlotEnum(String value)
     {
         this.value = value;
     }

@@ -8,20 +8,20 @@ import com.wcpredictor.match.MatchDetails;
 
 public abstract class AbstractSchedule 
 {
-    protected List<MatchDetails> schedule = new ArrayList<>();
-    protected final Map<String, String> keyToTeamMap; 
+    protected final List<MatchDetails> schedule = new ArrayList<>();
+    protected final Map<String, String> scheduleCodeToTeamNameMap;
 
     public AbstractSchedule(final Map<String, String> keyMap)
     {
-        this.keyToTeamMap = keyMap;
+        this.scheduleCodeToTeamNameMap = keyMap;
     }
 
     public List<MatchDetails> getSchedule()
     {
         for (MatchDetails matchDetails : schedule) 
         {
-            matchDetails.setHomeName(this.keyToTeamMap.get(matchDetails.getHomeKey()));
-            matchDetails.setAwayName(this.keyToTeamMap.get(matchDetails.getAwayKey()));
+            matchDetails.setHomeName(this.scheduleCodeToTeamNameMap.get(matchDetails.getHomeScheduleCode()));
+            matchDetails.setAwayName(this.scheduleCodeToTeamNameMap.get(matchDetails.getAwayScheduleCode()));
         }
 
         return schedule;
@@ -32,10 +32,10 @@ public abstract class AbstractSchedule
     {
         for (MatchDetails matchDetails : schedule) 
         {
-            matchDetails.setHomeName(this.keyToTeamMap.get(matchDetails.getHomeKey()));
-            matchDetails.setAwayName(this.keyToTeamMap.get(matchDetails.getAwayKey()));
+            matchDetails.setHomeName(this.scheduleCodeToTeamNameMap.get(matchDetails.getHomeScheduleCode()));
+            matchDetails.setAwayName(this.scheduleCodeToTeamNameMap.get(matchDetails.getAwayScheduleCode()));
 
-            matchDetails.display();
+            matchDetails.printMatchDetailsToConsole();
         }
 
         System.out.println();

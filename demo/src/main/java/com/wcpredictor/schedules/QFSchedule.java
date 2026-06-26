@@ -7,9 +7,9 @@ import com.wcpredictor.match.MatchDetails;
 public class QFSchedule extends AbstractSchedule 
 {
 
-    public QFSchedule(final Map<String, String> keyMap)
+    public QFSchedule(final Map<String, String> scheduleKeyToTeamNameMap)
     {
-        super(keyMap);
+        super(scheduleKeyToTeamNameMap);
         
         //Add 1/4 final matches
         schedule.add(new MatchDetails(97, "Thu 9 July", "W89", "W90"));

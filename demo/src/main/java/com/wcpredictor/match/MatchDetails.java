@@ -2,27 +2,27 @@ package com.wcpredictor.match;
 
 public class MatchDetails 
 {
-    private int matchNumber;
-    private String dateString;
-    private String homeKey;
+    private final int matchNumber;
+    private final String dateString;
+    private final String homeScheduleCode;
     private String homeName;
-    private String awayKey;
+    private String awayScheduleCode;
     private String awayName;
 
     public MatchDetails(int number, String dateString, String home) 
     {
         this.matchNumber = number;
         this.dateString = dateString;
-        this.homeKey = home;
+        this.homeScheduleCode = home;
     }
 
     public MatchDetails(int number, String dateString, String home, String away) 
     {
         this(number, dateString, home);
-        this.awayKey = away;
+        this.awayScheduleCode = away;
     }    
 
-    public int getmatchNumber() 
+    public int getMatchNumber()
     {
         return this.matchNumber;
     }
@@ -37,18 +37,18 @@ public class MatchDetails
         return this.awayName;
     }
 
-    public String getHomeKey() 
+    public String getHomeScheduleCode()
     {
-        return this.homeKey;
+        return this.homeScheduleCode;
     }
 
-    public String getAwayKey() 
+    public String getAwayScheduleCode()
     {
-        return this.awayKey;
+        return this.awayScheduleCode;
     }
 
-    public void setAwayKey(String away) {
-        this.awayKey = away;
+    public void setAwayScheduleCode(String away) {
+        this.awayScheduleCode = away;
     }
 
     public void setHomeName(String homeName) 
@@ -61,17 +61,14 @@ public class MatchDetails
         this.awayName = awayName;
     }
 
-    public void display() 
+    public void printMatchDetailsToConsole()
     {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Match " + this.matchNumber + ": ");
-        sb.append(this.homeName);
-        sb.append("(" + this.homeKey + ")");
-        sb.append(" v ");
-        sb.append(this.awayName);
-        sb.append("(" + this.awayKey + ")");
-        sb.append(", " + this.dateString);
+        String match = "Match " + this.matchNumber + ": " +
+                this.homeName + "(" + this.homeScheduleCode + ")" +
+                " v " +
+                this.awayName + "(" + this.awayScheduleCode + ")" +
+                ", " + this.dateString;
 
-        System.out.println(sb.toString());
+        System.out.println(match);
     }
 }

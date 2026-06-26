@@ -79,7 +79,7 @@ public class TeamGroupLookup {
         StringBuilder sb = new StringBuilder();
         for (String entry : lookup.keySet()) 
         {
-            sb.append(entry + ",");
+            sb.append(entry).append(",");
         }
         sb.delete(sb.length() - 1, sb.length());
 

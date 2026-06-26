@@ -17,7 +17,7 @@ public enum GroupEnum
 
     private final String value;
 
-    private GroupEnum(String value) 
+    GroupEnum(String value)
     {
         this.value = value;
     }
