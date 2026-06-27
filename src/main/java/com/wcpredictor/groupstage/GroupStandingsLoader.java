@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import com.wcpredictor.enums.GroupEnum;
-import com.wcpredictor.lookups.AnnexCFixtureLookup;
+import com.wcpredictor.exceptions.TeamNotFoundException;
 import com.wcpredictor.lookups.TeamGroupLookup;
 
 public class GroupStandingsLoader 
@@ -20,7 +20,7 @@ public class GroupStandingsLoader
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                 Objects.requireNonNull(
-                        AnnexCFixtureLookup.class.getClassLoader().getResourceAsStream("standings.csv")),
+                        GroupStandingsLoader.class.getClassLoader().getResourceAsStream("standings.csv")),
                 StandardCharsets.UTF_8)
         ))
         {  
@@ -36,7 +36,7 @@ public class GroupStandingsLoader
                     if (group == null)
                     {
                         String validTeams = TeamGroupLookup.validTeamList();
-                        throw new IOException("Invalid team in configuration: " + team + "\nValid Teams: " + validTeams);
+                        throw new TeamNotFoundException("Invalid team in configuration: " + team + "\nValid Teams: " + validTeams);
                     }
 
                     String key = i + group.getValue();
